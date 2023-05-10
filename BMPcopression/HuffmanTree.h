@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <queue>
+#include <vector>
+#include <unordered_map>
 
 using namespace std;
 
@@ -33,5 +35,7 @@ HuffmanNode* buildHuffmanTree(int n, int* weight, char* ch);
 void printHuffmanTree(HuffmanNode* root);
 void printHuffmanCode(HuffmanNode* root, string &code);
 void printLevelOrder(HuffmanNode* root);
+void record(HuffmanNode* root, unordered_map<char,string> &code, string &s);
+
 
 #endif

@@ -140,7 +140,22 @@ void printLevelOrder(HuffmanNode* root)
             cout << endl;
             swap(q, n);
         }
-        
+
     }
     cout << endl;
+}
+
+void record(HuffmanNode* root, unordered_map<char,string> &code, string &s)
+{
+    if (root->getCh() != -1) {
+        code[root->getCh()] = s;
+    }
+    else {
+        s.push_back('0');
+        record(root->getLeft(), code, s);
+        s.pop_back();
+        s.push_back('1');
+        record(root->getRight(), code, s);
+        s.pop_back();
+    }
 }
