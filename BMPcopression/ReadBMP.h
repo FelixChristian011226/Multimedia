@@ -10,6 +10,7 @@ class BMPFILE{
 public:
     BMPFILE(const char* filename);
     BMPFILE(int width, int height, int colorDepth, BYTE* bmpData);
+    BMPFILE(BMPFILE* bmp);
     ~BMPFILE();
     DWORD getWidth();
     DWORD getHeight();

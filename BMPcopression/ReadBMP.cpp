@@ -57,6 +57,39 @@ BMPFILE::BMPFILE(int width, int height, int colorDepth, BYTE* bmpData):width(wid
     bmpInfo.biSizeImage = imageSize;
 };
 
+BMPFILE::BMPFILE(BMPFILE *bmp){
+    // 创建文件头
+    bmpHeader.bfType = 0x4D42; // "BM"
+    bmpHeader.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + bmp->getImageSize();
+    bmpHeader.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+    
+    // 创建信息头
+    bmpInfo.biSize = sizeof(BITMAPINFOHEADER);
+    bmpInfo.biWidth = width;
+    bmpInfo.biHeight = height;
+    bmpInfo.biPlanes = 1;
+    bmpInfo.biBitCount = colorDepth;
+    bmpInfo.biCompression = BI_RGB;
+    bmpInfo.biSizeImage = imageSize;
+
+    // 分配内存并读取像素数组
+    bmpData = new BYTE[bmp->getImageSize()];
+    memcpy(bmpData, bmp->getImageData(), bmp->getImageSize());
+
+    // 获取图像宽度、高度、颜色深度、像素数组大小等信息
+    width = bmp->getWidth();
+    height = bmp->getHeight();
+    colorDepth = bmp->getColorDepth();
+    imageSize = bmp->getImageSize();
+
+    // 如果是8位颜色深度的BMP文件，读取调色板
+    if (colorDepth == 8) {
+        memcpy(palette, bmp->palette, sizeof(RGBQUAD)*256);
+    }
+
+
+}
+
 BMPFILE::~BMPFILE(){
     // 释放内存
     delete[] bmpData;
