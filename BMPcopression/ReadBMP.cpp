@@ -2,7 +2,7 @@
 
 BMPFILE::BMPFILE(const char* filename):width(0), height(0), colorDepth(0), imageSize(0){
     // 打开BMP文件
-    FILE *file = fopen("test.bmp", "rb");
+    FILE *file = fopen(filename, "rb");
     if (file == NULL) {
         printf("Failed to open file.\n");
         throw std::runtime_error("Error: Could not open file " + std::string(filename));
