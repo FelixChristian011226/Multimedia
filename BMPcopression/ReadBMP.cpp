@@ -55,6 +55,20 @@ BMPFILE::BMPFILE(int width, int height, int colorDepth, BYTE* bmpData):width(wid
     bmpInfo.biBitCount = colorDepth;
     bmpInfo.biCompression = BI_RGB;
     bmpInfo.biSizeImage = imageSize;
+
+    // 如果是8位颜色深度的BMP文件，创建调色板
+    if (colorDepth == 8) {
+        for (int i = 0; i < 256; i++) {
+            palette[i].rgbBlue = i;
+            palette[i].rgbGreen = i;
+            palette[i].rgbRed = i;
+            palette[i].rgbReserved = 0;
+        }
+    }
+
+    // 分配内存
+    bmpData = new BYTE[imageSize];
+
 };
 
 BMPFILE::BMPFILE(BMPFILE *bmp){
