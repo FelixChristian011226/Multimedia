@@ -148,7 +148,7 @@ void printLevelOrder(HuffmanNode* root)
     cout << endl;
 }
 
-void record(HuffmanNode* root, unordered_map<char,string> &code, string &s)
+void record(HuffmanNode* root, unordered_map<unsigned char,string> &code, string &s)
 {
     if (root->isLeaf()) {
         code[root->getCh()] = s;

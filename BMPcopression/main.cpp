@@ -3,6 +3,7 @@
 #include "ReadBMP.h"
 #include "WriteBMP.h"
 #include "HuffmanTree.h"
+#include "LosslessCompress.h"
 
 void ConvertToRGB(BMPFILE* bmp)
 {
@@ -41,7 +42,8 @@ int main()
 {
     BMPFILE bmp("0.bmp");
     //ConvertToRGB(&bmp);
-    TestHuffman();
-
+    //TestHuffman();
+    //unordered_map<char,string> code;
+    encode("1.txt", &bmp);
     return 0;
 }
