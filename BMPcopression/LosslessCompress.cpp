@@ -96,6 +96,7 @@ void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned c
     unsigned char c;
     for(DWORD i=0; i<bmp->getImageSize(); i++)
     {
+        //cout << (int)bmp->getImageData()[i] << endl;
         temp += code[bmp->getImageData()[i]];
         if(temp.length() >= 8)
         {
@@ -148,10 +149,17 @@ BMPFILE decode(const char *filename, unordered_map<string, unsigned char> &antic
     // cout << infoHeader.biSizeImage << endl;
     while(index<infoHeader.biSizeImage)
     {
-        while(anticode.find(temp.substr(0,len)) == anticode.end())
+        while(anticode.count(temp.substr(0,len)) == 0){
             len++;
+            // cout << temp.substr(0,len) << endl;
+            // if(len>15)
+            //     throw std::runtime_error("Error: Decode failed.");
+        }
+            
+        //cout << temp.substr(0,len) << " " << (int)anticode[temp.substr(0,len)] << endl;
         bmpData[index++] = anticode[temp.substr(0,len)];
         temp = temp.substr(len);
+        len=1;
     }
     BMPFILE bmp(fileHeader, infoHeader, bmpData);
 
