@@ -150,9 +150,13 @@ void printLevelOrder(HuffmanNode* root)
 
 void record(HuffmanNode* root, unordered_map<unsigned char,string> &code, unordered_map<string, unsigned char> &anticode, string &s)
 {
+    //static int count=0;
     if (root->isLeaf()) {
+        //count++;
         code[root->getCh()] = s;
+        //cout << count << " " << (int)root->getCh() << " " << code[root->getCh()] << endl;
         anticode[s] = root->getCh();
+        //cout << count << " " << s << " " << (int)anticode[s] << endl;
     }
     else {
         s.push_back('0');

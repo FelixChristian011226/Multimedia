@@ -198,6 +198,17 @@ void BMPFILE::setB(BYTE* b){
     }
 };
 
+void BMPFILE::writeData(const char *filename){
+    // 打开文件
+    using namespace std;
+	fstream f;
+	f.open("data.txt",ios::out); 
+    for(DWORD i=0 ;i<imageSize;i++){
+        cout << (int)bmpData[i] << " ";
+        f << (int)bmpData[i] << " ";
+    }
+}
+
 void PrintInfo(BMPFILE* bmp)
 {
     printf("width: %d\n", bmp->getWidth());

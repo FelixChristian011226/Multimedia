@@ -1,6 +1,8 @@
 #ifndef READBMP_H
 #define READBMP_H
 
+#include <iostream>
+#include <fstream>
 #include <windows.h>
 #include <stdio.h>
 #include <string>
@@ -28,7 +30,7 @@ public:
     void setR(BYTE* r);
     void setG(BYTE* g);
     void setB(BYTE* b);
-
+    void writeData(const char* filename);
 private:
     // 定义BMP文件头、位图信息头、调色板和像素数组等变量
     BITMAPFILEHEADER bmpHeader;

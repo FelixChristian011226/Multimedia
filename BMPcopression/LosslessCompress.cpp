@@ -144,13 +144,14 @@ BMPFILE decode(const char *filename, unordered_map<string, unsigned char> &antic
     //开始解码
     DWORD index=0;
     int len=0;
-    cout << infoHeader.biBitCount << endl;
-    cout << infoHeader.biSizeImage << endl;
+    // cout << infoHeader.biBitCount << endl;
+    // cout << infoHeader.biSizeImage << endl;
     while(index<infoHeader.biSizeImage)
     {
         while(anticode.find(temp.substr(0,len)) == anticode.end())
             len++;
         bmpData[index++] = anticode[temp.substr(0,len)];
+        temp = temp.substr(len);
     }
     BMPFILE bmp(fileHeader, infoHeader, bmpData);
 

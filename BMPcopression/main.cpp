@@ -48,6 +48,8 @@ int main()
     encode("1.txt", &bmp, anticode);
     BMPFILE decode_bmp = decode("1.txt", anticode);
     writeBMPFile("1.bmp", &decode_bmp);
+    //bmp.writeData("1-data.txt");
+    //decode_bmp.writeData("1-decode-data.txt");
 
     return 0;
 }
