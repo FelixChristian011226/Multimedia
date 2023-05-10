@@ -7,6 +7,7 @@
 #include "ReadBMP.h"
 #include "HuffmanTree.h"
 
-void encode(const char *filename, BMPFILE *bmp);
+void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned char> &anticode);
+BMPFILE decode(const char *filename, unordered_map<string, unsigned char> &anticode);
 
 #endif

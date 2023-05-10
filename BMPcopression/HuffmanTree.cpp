@@ -148,17 +148,18 @@ void printLevelOrder(HuffmanNode* root)
     cout << endl;
 }
 
-void record(HuffmanNode* root, unordered_map<unsigned char,string> &code, string &s)
+void record(HuffmanNode* root, unordered_map<unsigned char,string> &code, unordered_map<string, unsigned char> &anticode, string &s)
 {
     if (root->isLeaf()) {
         code[root->getCh()] = s;
+        anticode[s] = root->getCh();
     }
     else {
         s.push_back('0');
-        record(root->getLeft(), code, s);
+        record(root->getLeft(), code, anticode, s);
         s.pop_back();
         s.push_back('1');
-        record(root->getRight(), code, s);
+        record(root->getRight(), code, anticode, s);
         s.pop_back();
     }
 }

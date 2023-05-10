@@ -13,7 +13,21 @@ unsigned char stringToByte(string s, int len)
     return b;
 }
 
-void encode(const char *filename, BMPFILE *bmp)
+string byteToString(unsigned char b)
+{
+    string s = "";
+    for(int i=0; i<8; i++)
+    {
+        if(b & 1)
+            s = "1" + s;
+        else
+            s = "0" + s;
+        b = b >> 1;
+    }
+    return s;
+}
+
+void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned char> &anticode)
 {
    // 打开输出文件
     FILE* fp = fopen(filename, "wb");
@@ -26,7 +40,7 @@ void encode(const char *filename, BMPFILE *bmp)
     DWORD fileHeaderSize = sizeof(BITMAPFILEHEADER);
     DWORD infoHeaderSize = sizeof(BITMAPINFOHEADER);
     // 计算像素数据的大小（以字节为单位）
-    DWORD pixelDataSize = bmp->getWidth() * bmp->getHeight() * sizeof(RGBQUAD);
+    DWORD pixelDataSize = bmp->getWidth() * bmp->getHeight() * 3;
     // 创建文件头
     BITMAPFILEHEADER fileHeader = {};
     fileHeader.bfType = 0x4D42; // "BM"
@@ -41,6 +55,7 @@ void encode(const char *filename, BMPFILE *bmp)
     infoHeader.biBitCount = 24;
     infoHeader.biCompression = BI_RGB;
     infoHeader.biSizeImage = pixelDataSize;
+
     fwrite(&fileHeader, sizeof(BITMAPFILEHEADER), 1, fp);
     fwrite(&infoHeader, sizeof(BITMAPINFOHEADER), 1, fp);
 
@@ -66,9 +81,9 @@ void encode(const char *filename, BMPFILE *bmp)
     // printLevelOrder(root);
 
     //开始编码
-    unordered_map<unsigned char,string> code;
     string s="";
-    record(root, code, s);
+    unordered_map<unsigned char,string> code;
+    record(root, code, anticode, s);
 
     //测试编码是否成功
     // for(int i=0; i<256; i++)
@@ -96,5 +111,48 @@ void encode(const char *filename, BMPFILE *bmp)
         c = stringToByte(temp, 8);
         fwrite(&c, sizeof(c), 1, fp);
     }
-    
+    return;
+}
+
+BMPFILE decode(const char *filename, unordered_map<string, unsigned char> &anticode)
+{
+    // 打开输入文件
+    FILE* fp = fopen(filename, "rb");
+    if (fp == NULL) {
+        printf("Failed to open file.\n");
+        throw std::runtime_error(("Error: Could not open file " + std::string(filename)));
+    }
+
+    // 读取文件头和信息头
+    BITMAPFILEHEADER fileHeader = {};
+    BITMAPINFOHEADER infoHeader = {};
+    fread(&fileHeader, sizeof(fileHeader), 1, fp);
+    fread(&infoHeader, sizeof(infoHeader), 1, fp);
+
+    //读取Huffman编码后的数据
+    unsigned char c;
+    string temp="";
+    BYTE* bmpData = new BYTE[infoHeader.biSizeImage];
+    while(fread(&c, sizeof(c), 1, fp) != 0)
+    {
+        temp+=byteToString(c);
+    }
+
+    // 关闭文件
+    fclose(fp);
+
+    //开始解码
+    DWORD index=0;
+    int len=0;
+    cout << infoHeader.biBitCount << endl;
+    cout << infoHeader.biSizeImage << endl;
+    while(index<infoHeader.biSizeImage)
+    {
+        while(anticode.find(temp.substr(0,len)) == anticode.end())
+            len++;
+        bmpData[index++] = anticode[temp.substr(0,len)];
+    }
+    BMPFILE bmp(fileHeader, infoHeader, bmpData);
+
+    return bmp;
 }

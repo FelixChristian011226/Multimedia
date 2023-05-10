@@ -10,10 +10,13 @@ class BMPFILE{
 public:
     BMPFILE(const char* filename);
     BMPFILE(int width, int height, int colorDepth, BYTE* bmpData);
+    BMPFILE(BITMAPFILEHEADER bmpHeader, BITMAPINFOHEADER bmpInfo, BYTE* bmpData);
     BMPFILE(BMPFILE* bmp);
     ~BMPFILE();
     BITMAPFILEHEADER getFileHeader();
     BITMAPINFOHEADER getInfoHeader();
+    void setFileHeader(BITMAPFILEHEADER bmpHeader);
+    void setInfoHeader(BITMAPINFOHEADER bmpInfo);
     DWORD getWidth();
     DWORD getHeight();
     DWORD getColorDepth();

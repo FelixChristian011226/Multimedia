@@ -43,7 +43,11 @@ int main()
     BMPFILE bmp("0.bmp");
     //ConvertToRGB(&bmp);
     //TestHuffman();
-    //unordered_map<char,string> code;
-    encode("1.txt", &bmp);
+    unordered_map<unsigned char,string> code;
+    unordered_map<string, unsigned char> anticode;
+    encode("1.txt", &bmp, anticode);
+    BMPFILE decode_bmp = decode("1.txt", anticode);
+    writeBMPFile("1.bmp", &decode_bmp);
+
     return 0;
 }

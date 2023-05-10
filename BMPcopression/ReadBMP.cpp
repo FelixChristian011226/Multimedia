@@ -105,6 +105,16 @@ BMPFILE::BMPFILE(BMPFILE *bmp){
 
 }
 
+BMPFILE::BMPFILE(BITMAPFILEHEADER bmpHeader, BITMAPINFOHEADER bmpInfo, BYTE* bmpData){
+    this->bmpHeader = bmpHeader;
+    this->bmpInfo = bmpInfo;
+    this->bmpData = bmpData;
+    width = bmpInfo.biWidth;
+    height = bmpInfo.biHeight;
+    colorDepth = bmpInfo.biBitCount;
+    imageSize = bmpInfo.biSizeImage;
+}
+
 BMPFILE::~BMPFILE(){
     // 释放内存
     delete[] bmpData;
@@ -116,6 +126,14 @@ BITMAPFILEHEADER BMPFILE::getFileHeader(){
 
 BITMAPINFOHEADER BMPFILE::getInfoHeader(){
     return bmpInfo;
+}
+
+void BMPFILE::setFileHeader(BITMAPFILEHEADER bmpHeader){
+    this->bmpHeader = bmpHeader;
+}
+
+void BMPFILE::setInfoHeader(BITMAPINFOHEADER bmpInfo){
+    this->bmpInfo = bmpInfo;
 }
 
 DWORD BMPFILE::getWidth(){

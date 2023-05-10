@@ -38,6 +38,6 @@ HuffmanNode* buildHuffmanTree(int n, int* weight, unsigned char* ch);
 void printHuffmanTree(HuffmanNode* root);
 void printHuffmanCode(HuffmanNode* root, string &code);
 void printLevelOrder(HuffmanNode* root);
-void record(HuffmanNode* root, unordered_map<unsigned char,string> &code, string &s);
+void record(HuffmanNode* root, unordered_map<unsigned char,string> &code, unordered_map<string, unsigned char> &anticode, string &s);
 
 #endif
