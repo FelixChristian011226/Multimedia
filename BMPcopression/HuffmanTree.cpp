@@ -4,6 +4,7 @@ using namespace std;
 
 HuffmanNode::HuffmanNode(int weight, char ch)
 {
+    this->isleaf = true;
     this->weight = weight;
     this->ch = ch;
     this->left = nullptr;
@@ -12,8 +13,9 @@ HuffmanNode::HuffmanNode(int weight, char ch)
 
 HuffmanNode::HuffmanNode(HuffmanNode* left, HuffmanNode* right)
 {
+    this->isleaf = false;
     this->weight = left->weight + right->weight;
-    this->ch = -1;
+    this->ch = 0;
     this->left = left;
     this->right = right;
 }
@@ -24,12 +26,16 @@ HuffmanNode::~HuffmanNode()
     delete right;
 }
 
+bool HuffmanNode::isLeaf(){
+    return isleaf;
+}
+
 int HuffmanNode::getWeight()
 {
     return weight;
 }
 
-char HuffmanNode::getCh()
+unsigned char HuffmanNode::getCh()
 {
     return ch;
 }
@@ -49,7 +55,7 @@ void HuffmanNode::setWeight(int weight)
     this->weight = weight;
 }
 
-void HuffmanNode::setCh(char ch)
+void HuffmanNode::setCh(unsigned char ch)
 {
     this->ch = ch;
 }
@@ -77,19 +83,16 @@ public:
     }
 };
 
-HuffmanNode* buildHuffmanTree(int n, int* weight, char* ch)
+HuffmanNode* buildHuffmanTree(int n, int* weight, unsigned char* ch)
 {
     priority_queue<HuffmanNode*, vector<HuffmanNode*>, compareWeight> pq;
     for (int i = 0; i < n; i++) {
         pq.push(new HuffmanNode(weight[i], ch[i]));
     }
-    char c1,c2;
     for (int i = 0; i < n - 1; i++) {
         HuffmanNode* a = pq.top();
-        c1 = a->getCh();
         pq.pop();
         HuffmanNode* b = pq.top();
-        c2 = b->getCh();
         pq.pop();
         pq.push(merge(a, b));
     }
@@ -98,7 +101,7 @@ HuffmanNode* buildHuffmanTree(int n, int* weight, char* ch)
 
 void printHuffmanTree(HuffmanNode* root)
 {
-    if (root->getCh() != -1) {
+    if (root->isLeaf()) {
         cout << root->getCh() << endl;
     }
     else {
@@ -109,7 +112,7 @@ void printHuffmanTree(HuffmanNode* root)
 
 void printHuffmanCode(HuffmanNode* root, string &code)
 {
-    if (root->getCh() != -1) {
+    if (root->isLeaf()) {
         cout << root->getCh() << " " << code << endl;
     }
     else {
@@ -127,7 +130,7 @@ void printLevelOrder(HuffmanNode* root)
     queue<HuffmanNode*> q,n;
     q.push(root);
     while (!q.empty()) {
-        q.front()->getCh() == -1 ? cout << "N" : cout << q.front()->getCh();
+        q.front()->isLeaf() ? cout << q.front()->getCh() : cout << "x";
         cout << " ";
         if (q.front()->getLeft() != nullptr) {
             n.push(q.front()->getLeft());
@@ -147,7 +150,7 @@ void printLevelOrder(HuffmanNode* root)
 
 void record(HuffmanNode* root, unordered_map<char,string> &code, string &s)
 {
-    if (root->getCh() != -1) {
+    if (root->isLeaf()) {
         code[root->getCh()] = s;
     }
     else {
@@ -159,3 +162,4 @@ void record(HuffmanNode* root, unordered_map<char,string> &code, string &s)
         s.pop_back();
     }
 }
+

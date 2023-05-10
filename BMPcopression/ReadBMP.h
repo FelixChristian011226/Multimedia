@@ -12,6 +12,8 @@ public:
     BMPFILE(int width, int height, int colorDepth, BYTE* bmpData);
     BMPFILE(BMPFILE* bmp);
     ~BMPFILE();
+    BITMAPFILEHEADER getFileHeader();
+    BITMAPINFOHEADER getInfoHeader();
     DWORD getWidth();
     DWORD getHeight();
     DWORD getColorDepth();

@@ -1,3 +1,4 @@
+
 #include "ReadBMP.h"
 
 BMPFILE::BMPFILE(const char* filename):width(0), height(0), colorDepth(0), imageSize(0){
@@ -108,6 +109,14 @@ BMPFILE::~BMPFILE(){
     // 释放内存
     delete[] bmpData;
 };
+
+BITMAPFILEHEADER BMPFILE::getFileHeader(){
+    return bmpHeader;
+}
+
+BITMAPINFOHEADER BMPFILE::getInfoHeader(){
+    return bmpInfo;
+}
 
 DWORD BMPFILE::getWidth(){
     return width;

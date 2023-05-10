@@ -29,7 +29,7 @@ void ConvertToRGB(BMPFILE* bmp)
 
 void TestHuffman()
 {
-    char ch[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    unsigned char ch[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
     int f[8] = {1,2,3,4,5,6,7,8};
     HuffmanNode* root = buildHuffmanTree(8, f, ch);
     printLevelOrder(root);
@@ -41,7 +41,7 @@ int main()
 {
     BMPFILE bmp("0.bmp");
     //ConvertToRGB(&bmp);
-    //TestHuffman();
-    
+    TestHuffman();
+
     return 0;
 }
