@@ -19,9 +19,9 @@ public:
     BYTE* getR();
     BYTE* getG();
     BYTE* getB();
-    BYTE* setR(BYTE* r);
-    BYTE* setG(BYTE* g);
-    BYTE* setB(BYTE* b);
+    void setR(BYTE* r);
+    void setG(BYTE* g);
+    void setB(BYTE* b);
 
 private:
     // 定义BMP文件头、位图信息头、调色板和像素数组等变量

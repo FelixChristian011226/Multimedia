@@ -85,7 +85,7 @@ BYTE* BMPFILE::getImageData(){
 BYTE* BMPFILE::getR(){
     BYTE* r = new BYTE[width * height];
     for (int i = 0; i < width * height; i++) {
-        r[i] = getImageData()[3*i];
+        r[i] = getImageData()[3*i+2];
     }
     return r;
 };
@@ -101,9 +101,27 @@ BYTE* BMPFILE::getG(){
 BYTE* BMPFILE::getB(){
     BYTE* b = new BYTE[width * height];
     for (int i = 0; i < width * height; i++) {
-        b[i] = getImageData()[3*i+2];
+        b[i] = getImageData()[3*i];
     }
     return b;
+};
+
+void BMPFILE::setR(BYTE* r){
+    for (int i = 0; i < width * height; i++) {
+        getImageData()[3*i+2] = r[i];
+    }
+};
+
+void BMPFILE::setG(BYTE* g){
+    for (int i = 0; i < width * height; i++) {
+        getImageData()[3*i+1] = g[i];
+    }
+};
+
+void BMPFILE::setB(BYTE* b){
+    for (int i = 0; i < width * height; i++) {
+        getImageData()[3*i] = b[i];
+    }
 };
 
 void PrintInfo(BMPFILE* bmp)
