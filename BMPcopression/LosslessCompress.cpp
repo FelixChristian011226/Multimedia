@@ -101,11 +101,11 @@ void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned c
     for(DWORD i=0; i<bmp->getImageSize(); i++)
     {
         //cout << (int)bmp->getImageData()[i] << endl;
-        f << (int)bmp->getImageData()[i] << " " << code[bmp->getImageData()[i]] << endl;
+        //f << (int)bmp->getImageData()[i] << " " << code[bmp->getImageData()[i]] << endl;
         temp += code[bmp->getImageData()[i]];
         if(temp.length() >= 8)
         {
-            //f << temp.substr(0,8) << endl;
+            f << temp.substr(0,8) << endl;
             c = stringToByte(temp, 8);
             fwrite(&c, sizeof(c), 1, fp);
             temp = temp.substr(8);
@@ -119,6 +119,7 @@ void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned c
         c = stringToByte(temp, 8);
         fwrite(&c, sizeof(c), 1, fp);
     }
+    fclose(fp);
     return;
 }
 
@@ -159,12 +160,9 @@ BMPFILE decode(const char *filename, unordered_map<string, unsigned char> &antic
         while(anticode.count(temp.substr(0,len)) == 0){
             len++;
             //cout << temp.substr(0,len) << len << endl;
-            if(len>15)
-                throw std::runtime_error("Error: Decode failed.");
         }
             
-        //cout << temp.substr(0,len) << " " << (int)anticode[temp.substr(0,len)] << endl;
-        //cout << index << endl;
+        //cout << index << " " << temp.substr(0,len) << " " << (int)anticode[temp.substr(0,len)] << endl;
         bmpData[index++] = anticode[temp.substr(0,len)];
         temp = temp.substr(len);
         len=1;
