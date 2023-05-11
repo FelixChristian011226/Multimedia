@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
 #include <time.h>
-#include <sys/stat.h>
 #include "ReadBMP.h"
 #include "WriteBMP.h"
 #include "HuffmanTree.h"
@@ -40,49 +39,20 @@ void TestHuffman()
     printHuffmanCode(root, code);
 }
 
-size_t getFileSize1(const char *fileName) {
-
-	if (fileName == NULL) {
-		return 0;
-	}
-	
-	// 这是一个存储文件(夹)信息的结构体，其中有文件大小和创建时间、访问时间、修改时间等
-	struct stat statbuf;
-
-	// 提供文件名字符串，获得文件属性结构体
-	stat(fileName, &statbuf);
-	
-	// 获取文件大小
-	size_t filesize = statbuf.st_size;
-
-	return filesize;
-}
-
 int main()
 {
-    cout << "Please enter the file name that you want to compress: " << endl;
-    cout << "  ";
-    string input;
-    cin >> input;
-    cout << "Please enter the file name of the output file: " << endl;
-    cout << "  ";
-    string output;
-    cin >> output;
-
     clock_t start_time=clock();
-    BMPFILE bmp(input.c_str());
-    //ConvertToRGB(&bmp);
+    BMPFILE bmp("0.bmp");
+    // ConvertToRGB(&bmp);
     //TestHuffman();
     unordered_map<unsigned char,string> code;
     unordered_map<string, unsigned char> anticode;
-    string hufname = input.substr(0,input.length()-4)+".huf";
-    encode(hufname.c_str(), &bmp, anticode);
-    BMPFILE decode_bmp = decode(hufname.c_str(), anticode);
-    writeBMPFile(output.c_str(), &decode_bmp);
+    encode("1.huf", &bmp, anticode);
+    BMPFILE decode_bmp = decode("1.huf", anticode);
+    writeBMPFile("1.bmp", &decode_bmp);
     //bmp.writeData("1-data.txt");
     //decode_bmp.writeData("1-decode-data.txt");
     clock_t end_time=clock();
     cout << "Program running time: " << (double)(end_time-start_time)/CLOCKS_PER_SEC << "s" << endl;
-    cout << "Compression ratio: " << (double)getFileSize1(hufname.c_str())/getFileSize1(input.c_str()) << endl;
     return 0;
 }
