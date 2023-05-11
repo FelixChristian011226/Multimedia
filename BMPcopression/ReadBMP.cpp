@@ -2,6 +2,9 @@
 #include "ReadBMP.h"
 
 BMPFILE::BMPFILE(const char* filename):width(0), height(0), colorDepth(0), imageSize(0){
+
+    std::cout << "Reading bmp image from " << filename << "..." << std::endl;
+
     // 打开BMP文件
     FILE *file = fopen(filename, "rb");
     if (file == NULL) {
@@ -39,6 +42,8 @@ BMPFILE::BMPFILE(const char* filename):width(0), height(0), colorDepth(0), image
 
     // 关闭文件
     fclose(file);
+
+    std::cout << "  Reading finished!" << std::endl;
 
 };
 
