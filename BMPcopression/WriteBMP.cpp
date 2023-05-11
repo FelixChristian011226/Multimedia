@@ -3,6 +3,9 @@
 
 void writeBMPFile(const char* filename, BMPFILE *bmp)
 {
+
+    std::cout << "Writing BMP file into " << filename << std::endl;
+
     // 打开输出文件
     FILE* fp = fopen(filename, "wb");
     if (fp == NULL) {
@@ -45,4 +48,8 @@ void writeBMPFile(const char* filename, BMPFILE *bmp)
 
     // 关闭文件
     fclose(fp);
+
+    std::cout << "  Writing finished!" << std::endl;
+
+    return;
 }
