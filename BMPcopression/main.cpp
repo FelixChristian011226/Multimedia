@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
+#include <time.h>
 #include "ReadBMP.h"
 #include "WriteBMP.h"
 #include "HuffmanTree.h"
@@ -40,16 +41,18 @@ void TestHuffman()
 
 int main()
 {
+    clock_t start_time=clock();
     BMPFILE bmp("0.bmp");
     // ConvertToRGB(&bmp);
     //TestHuffman();
     unordered_map<unsigned char,string> code;
     unordered_map<string, unsigned char> anticode;
-    encode("1.txt", &bmp, anticode);
-    BMPFILE decode_bmp = decode("1.txt", anticode);
+    encode("1.huf", &bmp, anticode);
+    BMPFILE decode_bmp = decode("1.huf", anticode);
     writeBMPFile("1.bmp", &decode_bmp);
     //bmp.writeData("1-data.txt");
     //decode_bmp.writeData("1-decode-data.txt");
-
+    clock_t end_time=clock();
+    cout << "Program running time: " << (double)(end_time-start_time)/CLOCKS_PER_SEC << "s" << endl;
     return 0;
 }

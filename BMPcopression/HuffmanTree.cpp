@@ -85,6 +85,7 @@ public:
 
 HuffmanNode* buildHuffmanTree(int n, int* weight, unsigned char* ch)
 {
+    std::cout << "  Building HuffmanTree..." << std::endl;
     priority_queue<HuffmanNode*, vector<HuffmanNode*>, compareWeight> pq;
     for (int i = 0; i < n; i++) {
         pq.push(new HuffmanNode(weight[i], ch[i]));
@@ -96,7 +97,11 @@ HuffmanNode* buildHuffmanTree(int n, int* weight, unsigned char* ch)
         pq.pop();
         pq.push(merge(a, b));
     }
+
+    std::cout << "    Building finished!" << std::endl;
+
     return pq.top();
+    
 }
 
 void printHuffmanTree(HuffmanNode* root)

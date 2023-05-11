@@ -29,6 +29,9 @@ string byteToString(unsigned char b)
 
 void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned char> &anticode)
 {
+
+    cout << "Encoding..." << endl;
+
    // 打开输出文件
     FILE* fp = fopen(filename, "wb");
     if (fp == NULL) {
@@ -120,11 +123,17 @@ void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned c
         fwrite(&c, sizeof(c), 1, fp);
     }
     fclose(fp);
+
+    cout << "  Encoding finished!" << endl;
+
     return;
 }
 
 BMPFILE decode(const char *filename, unordered_map<string, unsigned char> &anticode)
 {
+
+    cout << "Decoding..." << endl;
+
     // 打开输入文件
     FILE* fp = fopen(filename, "rb");
     if (fp == NULL) {
@@ -168,6 +177,8 @@ BMPFILE decode(const char *filename, unordered_map<string, unsigned char> &antic
         len=1;
     }
     BMPFILE bmp(fileHeader, infoHeader, bmpData);
+
+    cout << "  Decoding finished!" << endl;
 
     return bmp;
 }
