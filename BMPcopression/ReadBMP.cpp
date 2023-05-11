@@ -207,6 +207,7 @@ void BMPFILE::writeData(const char *filename){
         cout << (int)bmpData[i] << " ";
         f << (int)bmpData[i] << " ";
     }
+    f.close();
 }
 
 void PrintInfo(BMPFILE* bmp)

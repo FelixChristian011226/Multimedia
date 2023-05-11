@@ -41,7 +41,7 @@ void TestHuffman()
 int main()
 {
     BMPFILE bmp("0.bmp");
-    //ConvertToRGB(&bmp);
+    // ConvertToRGB(&bmp);
     //TestHuffman();
     unordered_map<unsigned char,string> code;
     unordered_map<string, unsigned char> anticode;

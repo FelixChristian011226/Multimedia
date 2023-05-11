@@ -2,6 +2,7 @@
 #define HUFFMANTREE_H
 
 #include <iostream>
+#include <fstream>
 #include <windows.h>
 #include <queue>
 #include <vector>
@@ -39,5 +40,6 @@ void printHuffmanTree(HuffmanNode* root);
 void printHuffmanCode(HuffmanNode* root, string &code);
 void printLevelOrder(HuffmanNode* root);
 void record(HuffmanNode* root, unordered_map<unsigned char,string> &code, unordered_map<string, unsigned char> &anticode, string &s);
+void outputCode(const char *filename, unordered_map<unsigned char,string> &code);
 
 #endif
