@@ -30,6 +30,7 @@ public:
     void setR(BYTE* r);
     void setG(BYTE* g);
     void setB(BYTE* b);
+    void setImageData(BYTE* bmpData);
     void writeData(const char* filename);
 private:
     // 定义BMP文件头、位图信息头、调色板和像素数组等变量

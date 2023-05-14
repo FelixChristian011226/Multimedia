@@ -203,6 +203,10 @@ void BMPFILE::setB(BYTE* b){
     }
 };
 
+void BMPFILE::setImageData(BYTE* bmpData){
+    this->bmpData = bmpData;
+}
+
 void BMPFILE::writeData(const char *filename){
     // 打开文件
     using namespace std;

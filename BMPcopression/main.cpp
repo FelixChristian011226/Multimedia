@@ -6,6 +6,7 @@
 #include "WriteBMP.h"
 #include "HuffmanTree.h"
 #include "LosslessCompress.h"
+#include "LossyCompress.h"
 
 // 通过stat结构体 获得文件大小，单位字节
 size_t getFileSize1(const char *fileName) {
@@ -59,20 +60,15 @@ void TestHuffman()
     printHuffmanCode(root, code);
 }
 
-int main()
+void LossyCompress(BMPFILE &bmp, string &losname, string &output)
 {
-    string input,output,hufname;
-    cout << "Please enter the filename which you want to read: " << endl;
-    cout << "  ";
-    cin >> input;
-    cout << "Please enter the filename which you want to write: " << endl;
-    cout << "  ";
-    cin >> output;
-    hufname = input.substr(0,input.find('.')) + ".huf";
-    clock_t start_time=clock();
-    BMPFILE bmp(input.c_str());
-    // ConvertToRGB(&bmp);
-    //TestHuffman();
+    LossyEncode(losname.c_str(), &bmp);
+    BMPFILE decode_bmp = LossyDecode(losname.c_str());
+    writeBMPFile(output.c_str(), &decode_bmp);
+}
+
+void LosslessCompress(BMPFILE &bmp, string &hufname, string &output)
+{
     unordered_map<unsigned char,string> code;
     unordered_map<string, unsigned char> anticode;
     encode(hufname.c_str(), &bmp, anticode);
@@ -80,8 +76,43 @@ int main()
     writeBMPFile(output.c_str(), &decode_bmp);
     //bmp.writeData("1-data.txt");
     //decode_bmp.writeData("1-decode-data.txt");
+}
+
+int main()
+{
+    string input,output,hufname,losname,cprname;
+    int lossy;
+    cout << "Please enter the filename which you want to read: " << endl;
+    cout << "  ";
+    cin >> input;
+    cout << "Please enter the filename which you want to write: " << endl;
+    cout << "  ";
+    cin >> output;
+    cout << "Please enter the compression method: " << endl;
+    cout << "  0. Lossy" << endl;
+    cout << "  1. Lossless" << endl;
+    cout << "  ";
+    cin >> lossy;
+
+    hufname = input.substr(0,input.find('.')) + ".huf";
+    losname = input.substr(0,input.find('.')) + ".los";
+    clock_t start_time=clock();
+    BMPFILE bmp(input.c_str());
+
+    // ConvertToRGB(&bmp);
+    //TestHuffman();
+
+    if (lossy==0) {
+        cprname = losname;
+        LossyCompress(bmp, losname, output);
+    }
+    else {
+        cprname = hufname;
+        LosslessCompress(bmp, hufname, output);
+    }
+
     clock_t end_time=clock();
     cout << "Program running time: " << (double)(end_time-start_time)/CLOCKS_PER_SEC << "s" << endl;
-    cout << "Compression rate: " << (double)getFileSize1(hufname.c_str())/(double)getFileSize1(input.c_str()) << endl;
+    cout << "Compression rate: " << (double)getFileSize1(cprname.c_str())/(double)getFileSize1(input.c_str()) << endl;
     return 0;
 }

@@ -93,10 +93,10 @@ void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned c
     // {
     //     cout << i << " " << code[i] << endl;
     // }
-    outputCode("1-code.txt", code);
+    //outputCode("1-code.txt", code);
     
     //测试encode内容
-    ofstream f("1-encode.txt");
+    //ofstream f("1-encode.txt");
 
     //开始写入文件
     string temp;
@@ -108,13 +108,13 @@ void encode(const char *filename, BMPFILE *bmp, unordered_map<string, unsigned c
         temp += code[bmp->getImageData()[i]];
         if(temp.length() >= 8)
         {
-            f << temp.substr(0,8) << endl;
+            //f << temp.substr(0,8) << endl;
             c = stringToByte(temp, 8);
             fwrite(&c, sizeof(c), 1, fp);
             temp = temp.substr(8);
         }
     }
-    f.close();
+    //f.close();
     if(temp.length() > 0)
     {
         while(temp.length() < 8)
