@@ -6,5 +6,5 @@ put a 24-bit bmp image in the directory of source code. Then compile and run mai
 input filenames and compression method.\n
 ouput files will be stored in same directory.\n
 
-#Notice
+# Notice
 Lossless compression may take dozens of minutes. Please be patient.
